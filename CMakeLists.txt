@@ -34,7 +34,7 @@ endif()
 # work, but was required for OpenCV, so it's useful to be able to
 # install a from-source build of Armadillo in /usr/local and link to
 # this.
-set(MORPH_ARMADILLO_LIBPATH "" CACHE PATH "The path to the armadillo library (e.g. /usr/local/lib)")
+set(MORPH_ARMADILLO_LIBPATH "" CACHE PATH "Path to armadillo")
 
 
 # Lib finding - we have to do this, so that the correct include paths
@@ -51,7 +51,8 @@ string(TOLOWER ${LIB_TYPE} SEARCH_TYPE)
 # In case the above fails, something like this might work
 find_package (HDF5 NAMES hdf5 COMPONENTS C ${SEARCH_TYPE})
 
-include_directories(${OpenCV_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR} ${GLUT_INCLUDE_DIR} ${X11_INC_SEARCH_PATH} ${HDF5_INCLUDE_DIR})
+
+include_directories(${OpenCV_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR} ${GLUT_INCLUDE_DIR} ${X11_INC_SEARCH_PATH} ${HDF5_INCLUDE_DIR} include)
 
 # Find libmorphologica using pkgconfig
 find_package(PkgConfig)
@@ -69,7 +70,8 @@ else()
     "You can set MORPH_LIB with `cmake -DMORPH_LIB=/pathto/lib` ...")
 endif()
 
-add_subdirectory(sim)
+#add_subdirectory(sim)
+
 
 # For debugging of variables:
 set(DEBUG_VARIABLES OFF)
@@ -79,3 +81,22 @@ if(DEBUG_VARIABLES)
     message(STATUS "${_variableName}=${${_variableName}}")
   endforeach()
 endif(DEBUG_VARIABLES)
+
+
+# The main process executable, for debugging and playing with the code.
+file(GLOB SOURCES
+    sim/*.cpp
+)
+
+add_executable(animado ${SOURCES})
+
+target_link_libraries(animado ${MORPH_LDFLAGS} ${HDF5_C_${LIB_TYPE}_LIBRARY})
+target_link_libraries("animado" openblas)
+target_link_libraries("animado" lapack)
+
+find_package(CGAL)
+find_package(X11 REQUIRED)
+include_directories( ${X11_INC_SEARCH_PATH} )
+target_link_libraries("animado" CGAL::CGAL)
+target_link_libraries("animado" ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${X11_X11_LIB})
+

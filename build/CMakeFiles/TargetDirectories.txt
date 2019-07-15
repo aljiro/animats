@@ -1,0 +1,3 @@
+/home/aljiro/dev/animats/build/CMakeFiles/rebuild_cache.dir
+/home/aljiro/dev/animats/build/CMakeFiles/template.dir
+/home/aljiro/dev/animats/build/CMakeFiles/edit_cache.dir

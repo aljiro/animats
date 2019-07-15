@@ -1,0 +1,1 @@
+ffmpeg -r 1/5 -i captures/frame%d.jpeg -c:v libx264 -vf fps=25 out.mp4 

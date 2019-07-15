@@ -1,0 +1,15 @@
+<experiment>
+	<plane>
+		<scale>(2.0,3.0,1.0)</scale>
+		<position>(0.0,0.0,0.0)</position>
+		<collitionable>true</collitionable>
+		<rotation>(0.0,0.0,0.0)</rotation>
+	</plane>
+
+	<animat id="1">
+		<scale>(0.5,0.5,0.5)</scale>
+		<position>(0.0,0.0,2.0)</position>
+		<rotate>(0.0,0.0,90.0)</rotate>
+		<softness>0.2</softness>
+	</animat>
+</experiment>
